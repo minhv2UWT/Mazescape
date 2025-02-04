@@ -19,6 +19,15 @@ class GameEngine {
         this.options = options || {
             debugging: false,
         };
+        this.left = false;
+        this.right = false;
+        this.up = false;
+        this.fall = false;
+        this.down = false;
+        this.isJump = false;
+        this.speedup = false;
+        this.speed = true;
+        this.dash = false;
     };
 
     init(ctx) {
@@ -37,6 +46,69 @@ class GameEngine {
     };
 
     startInput() {
+        var that = this;
+        this.ctx.canvas.addEventListener('keydown',function(e){
+            switch(e.code) {
+                case "ArrowLeft":
+                    that.left = true;
+                    break;
+                case "ArrowRight":
+                    that.right = true;
+                    break;
+                case "ArrowUp":
+                    that.up = true;
+                    break;
+                case "ArrowDown":
+                    that.down = true;
+                    break;
+                case "Space":
+                    that.isJump = true;
+                    that.fall = false;
+                    break;
+                case "ShiftLeft":
+                    that.speedup = true;
+                    that.speed = false;
+                    break;
+                case "KeyD":
+                    that.attack = true;
+                    break;
+                case "KeyS":
+                    that.dash = true;
+                    break;
+            }
+
+        }, false);
+        this.ctx.canvas.addEventListener('keyup',function(e){
+            switch(e.code) {
+                case "ArrowLeft":
+                    that.left = false;
+                    break;
+                case "ArrowRight":
+                    that.right = false;
+                    break;
+                case "ArrowUp":
+                    that.up = false;
+                    break;
+                case "ArrowDown":
+                    that.down = false;
+                    break;
+                case "Space":
+                    that.isJump = false;
+                    that.fall = true;
+                    break;
+                case "ShiftLeft":
+                    that.speedup = false;
+                    that.speed = true;
+                    break;
+                case "KeyD":
+                    that.attack = false;
+                    break;
+                case "KeyS":
+                    that.dash = false;
+                    break;    
+            }
+
+        }, false);
         const getXandY = e => ({
             x: e.clientX - this.ctx.canvas.getBoundingClientRect().left,
             y: e.clientY - this.ctx.canvas.getBoundingClientRect().top
@@ -81,13 +153,14 @@ class GameEngine {
     };
 
     draw() {
-        // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
+        
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
         // Draw latest things first
         for (let i = this.entities.length - 1; i >= 0; i--) {
             this.entities[i].draw(this.ctx, this);
         }
+        this.camera.draw(this.ctx);
     };
 
     update() {
@@ -115,5 +188,3 @@ class GameEngine {
     };
 
 };
-
-// KV Le was here :)
