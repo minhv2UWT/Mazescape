@@ -6,11 +6,10 @@ class entitiesmanager {
         this.game.camera = this;
         this.startingPointX = 0;
         this.startingPointY = 655;
-        if(this.character === "marksman") {
-            this.player = new Marksman(this.game, this.startingPointX, this.startingPointY);
-        } else {
-            this.player = new Warrior(this.game, this.startingPointX, this.startingPointY);
-        }
+        this.player = new Player(this.game, this.startingPointX, this.startingPointY);
+
+
+
         this.loadLevel(level1Scene1);
     }
 

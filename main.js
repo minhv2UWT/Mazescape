@@ -6,6 +6,6 @@ ASSET_MANAGER.downloadAll(() => {
 	const ctx = canvas.getContext("2d");
 
 	gameEngine.init(ctx);
-	new entitiesmanager(gameEngine, "marksman");
+	new entitiesmanager(gameEngine, "warrior");
 	gameEngine.start();
 });
