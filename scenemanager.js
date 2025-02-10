@@ -17,9 +17,13 @@ class entitiesmanager {
     loadLevel(level) {
         this.level = level;
         this.game.entities = [];
-
- 
-
+        if (level.ground) {
+            for (let i = 0; i < level.ground.length; i++) {
+                let ground = level.ground[i];
+                this.game.addEntity(new Platform(ground.x, ground.y, ground.width, ground.height,1));
+            
+            }
+        }
         this.game.addEntity(this.player);
     }
 

@@ -32,12 +32,12 @@ class Player {
         this.totalKills = 0;
         this.power = false;
         this.assets = {
-            Marksman: ASSET_MANAGER.getAsset("./sprites/marksmenwalkLeft.png"),
-            MarksmanIdle: ASSET_MANAGER.getAsset("./sprites/marksmentemp.png"),
-            WarriorIdle: ASSET_MANAGER.getAsset("./sprites/warriortemp.png"),
-            WarriorAttack: ASSET_MANAGER.getAsset("./sprites/warriorattack.png"),
-            Warrior: ASSET_MANAGER.getAsset("./sprites/warriorwalk1.png"),
-            MarksmanAttack: ASSET_MANAGER.getAsset("./sprites/pirateswordattack.png")
+            Marksman: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
+            MarksmanIdle: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
+            WarriorIdle: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
+            WarriorAttack: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
+            Warrior: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
+            MarksmanAttack: ASSET_MANAGER.getAsset("./sprites/warrior.png")
         };
 
         this.sprite = this.assets[this.characterType];
@@ -81,7 +81,6 @@ class Player {
         this.handleAttack();
         this.handleDash();
         this.updateBoundingBox();
-        this.checkComplete();
 
         if (this.attackCooldown > 0) this.attackCooldown--;
         if (this.dashCooldown > 0) this.dashCooldown--;
@@ -141,15 +140,6 @@ class Player {
         }
     }
 
-    checkComplete() {
-        if (this.currentScene === 1) {
-            this.level = level1Scene1;
-            this.checkObjectives(this.level);
-        } else if (this.currentScene === 2) {
-            this.level = level1Scene2;
-            this.checkObjectives(this.level);
-        }
-    }
 
     checkObjectives(level) {
         this.levelO = level;
