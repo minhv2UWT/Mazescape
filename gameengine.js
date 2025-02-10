@@ -22,12 +22,9 @@ class GameEngine {
         this.left = false;
         this.right = false;
         this.up = false;
-        this.fall = false;
         this.down = false;
-        this.isJump = false;
-        this.speedup = false;
-        this.speed = true;
-        this.dash = false;
+        this.isMoving = false;
+
     };
 
     init(ctx) {
@@ -62,23 +59,18 @@ class GameEngine {
                     that.down = true;
                     break;
                 case "Space":
-                    that.isJump = true;
-                    that.fall = false;
                     break;
                 case "ShiftLeft":
-                    that.speedup = true;
-                    that.speed = false;
                     break;
                 case "KeyD":
-                    that.attack = true;
                     break;
                 case "KeyS":
-                    that.dash = true;
                     break;
             }
 
         }, false);
         this.ctx.canvas.addEventListener('keyup',function(e){
+            that.isMoving = false;
             switch(e.code) {
                 case "ArrowLeft":
                     that.left = false;
@@ -93,18 +85,12 @@ class GameEngine {
                     that.down = false;
                     break;
                 case "Space":
-                    that.isJump = false;
-                    that.fall = true;
                     break;
                 case "ShiftLeft":
-                    that.speedup = false;
-                    that.speed = true;
                     break;
                 case "KeyD":
-                    that.attack = false;
                     break;
                 case "KeyS":
-                    that.dash = false;
                     break;    
             }
 

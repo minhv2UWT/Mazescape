@@ -27,7 +27,22 @@ class BoundingBox {
             this.bottom > oth.top
         );
     }
-
+  
+    collideRight(oth) {
+        return this.right > oth.left && this.left < oth.left && this.bottom > oth.top && this.top < oth.bottom;
+    }
+    
+    collideLeft(oth) {
+        return this.left < oth.right && this.right > oth.right && this.bottom > oth.top && this.top < oth.bottom;
+    }
+    
+    collideTop(oth) {
+        return this.top < oth.bottom && this.bottom > oth.bottom && this.right > oth.left && this.left < oth.right;
+    }
+    
+    collideBottom(oth) {
+        return this.bottom > oth.top && this.top < oth.top && this.right > oth.left && this.left < oth.right;
+    }
     overlap(oth) {
         const aHalf = { x: this.width / 2, y: this.height / 2 };
         const bHalf = { x: oth.width / 2, y: oth.height / 2 };

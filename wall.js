@@ -1,4 +1,4 @@
-class Platform {
+class Wall {
     constructor(x, y, width, height, number) {
         this.boundingBox = new BoundingBox(x, y, width, height);
         Object.assign(this, { x, y, width, height });
