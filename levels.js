@@ -26,4 +26,5 @@ var level1Scene1 = {
         { x: 50, y: 650, width: 50, height: 50 }, 
         { x: 100, y: 600, width: 50, height: 50 }, 
     ],
+    hunter: [{ x: 100, y: 200, width: 50, height: 50 }]
 };

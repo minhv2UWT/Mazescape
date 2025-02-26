@@ -24,6 +24,8 @@ class GameEngine {
         this.up = false;
         this.down = false;
         this.isMoving = false;
+        this.isPlayerTurn = true;
+        this.hunterRemainingMoves = 0;
 
     };
 
@@ -158,6 +160,9 @@ class GameEngine {
             if (!entity.removeFromWorld) {
                 entity.update();
             }
+        }
+        if (!this.isPlayerTurn && this.hunterRemainingMoves === 0) {
+            this.isPlayerTurn = true;
         }
 
         for (let i = this.entities.length - 1; i >= 0; --i) {

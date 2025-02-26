@@ -52,6 +52,10 @@ class Player {
         this.updatePosition();
         this.handleCollisions();
         this.updateEdgePoints();
+        if (this.game.isPlayerTurn && !this.isMoving) {
+            this.game.hunterRemainingMoves = 2;
+            this.game.isPlayerTurn = false;
+        }
     }
 
     handleMovementInput() {
@@ -114,25 +118,25 @@ class Player {
                 if (this.leftPoint.x >= box.left && this.leftPoint.x <= box.right &&
                     this.leftPoint.y >= box.top && this.leftPoint.y <= box.bottom) {
                     canMoveLeft = false;
-                    console.log("Left hit");
+   
                 }
 
                 if (this.rightPoint.x >= box.left && this.rightPoint.x <= box.right &&
                     this.rightPoint.y >= box.top && this.rightPoint.y <= box.bottom) {
                     canMoveRight = false;
-                    console.log("Right hit");
+
                 }
 
                 if (this.topPoint.x >= box.left && this.topPoint.x <= box.right &&
                     this.topPoint.y >= box.top && this.topPoint.y <= box.bottom) {
                     canMoveUp = false;
-                    console.log("Top hit");
+
                 }
 
                 if (this.bottomPoint.x >= box.left && this.bottomPoint.x <= box.right &&
                     this.bottomPoint.y >= box.top && this.bottomPoint.y <= box.bottom) {
                     canMoveDown = false;
-                    console.log("Bottom hit");
+
                 }
             }
         }
