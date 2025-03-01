@@ -26,7 +26,6 @@ class entitiesmanager {
         if (level.hunter) {
                 let hunter = level.hunter[0];
                 this.game.addEntity(new Hunter(this.game, hunter.x, hunter.y));
-            
         }
         this.game.addEntity(this.player);
     }
