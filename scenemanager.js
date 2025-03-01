@@ -7,7 +7,7 @@ class entitiesmanager {
         this.startingPointX = 0;
         this.startingPointY = 600;
         this.player = new Player(this.game, this.startingPointX, this.startingPointY);
-
+        this.hunter = new Hunter(this.game, 500, this.startingPointY);
 
 
         this.loadLevel(level1Scene1);
@@ -23,11 +23,8 @@ class entitiesmanager {
             
             }
         }
-        if (level.hunter) {
-                let hunter = level.hunter[0];
-                this.game.addEntity(new Hunter(this.game, hunter.x, hunter.y));
-        }
         this.game.addEntity(this.player);
+        this.game.addEntity(this.hunter);
     }
 
     update() {

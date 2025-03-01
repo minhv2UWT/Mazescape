@@ -1,4 +1,4 @@
-class Player {
+class Hunter {
     constructor(game, x, y, characterNumber) {
         Object.assign(this, { game, x, y });
         this.startingPointX = x;
@@ -10,7 +10,7 @@ class Player {
         this.height = 50;
         this.speed = 1; 
         this.moveDistance = 50; 
-        this.game.isMoving = false; 
+        this.game.isHunterMoving = false; 
         this.targetX = x;
         this.targetY = y;
 
@@ -39,16 +39,10 @@ class Player {
         this.updateEdgePoints();
     }
 
-    die() {
-        console.log("Player has been defeated!");
-        this.isDead = true;
-        this.totalKills = 0;
-        this.removeFromWorld = true;
-    }
 
     update() {
         if (this.isDead) return;
-        if((this.game.turnNumber > 0 && !this.game.isMoving) || this.game.isHunterMoving) return 0;
+        if((this.game.turnNumber == 0 && !this.game.isHunterMoving) || this.game.isMoving) return;
         this.handleMovementInput();
         this.updatePosition();
         this.handleCollisions();
@@ -56,39 +50,88 @@ class Player {
     }
 
     handleMovementInput() {
-        if (this.game.isMoving) return; 
-
-        if (this.game.left && this.moves.left) {
-            this.targetX = this.x - this.moveDistance;
-            this.attackDirection = "left";
-            this.currentAnimator = this.animators.walking;
-            this.facingLeft = true;
-            this.game.isMoving = true;
-            this.game.turnNumber = 2;
-        } else if (this.game.right && this.moves.right) {
-            this.targetX = this.x + this.moveDistance;
-            this.attackDirection = "right";
-            this.currentAnimator = this.animators.walking;
-            this.facingLeft = false;
-            this.game.isMoving = true;
-            this.game.turnNumber = 2;
-        } else if (this.game.up && this.moves.up) {
-            this.targetY = this.y - this.moveDistance;
-            this.attackDirection = "up";
-            this.currentAnimator = this.animators.walking;
-            this.game.isMoving = true;
-            this.game.turnNumber = 2;
-        } else if (this.game.down && this.moves.down) {
-            this.targetY = this.y + this.moveDistance;
-            this.attackDirection = "down";
-            this.currentAnimator = this.animators.walking;
-            this.game.isMoving = true;
-            this.game.turnNumber = 2;
+        if (this.game.isHunterMoving) return;
+    
+        // Find the Player
+        const player = this.game.entities.find(e => e instanceof Player);
+        if (!player) return;
+    
+        // Current distances
+        const currentDx = player.x - this.x;
+        const currentDy = player.y - this.y;
+        const currentXDist = Math.abs(currentDx);
+        const currentYDist = Math.abs(currentDy);
+    
+        const validMoves = [];
+    
+        if (this.moves.left) {
+            const newXDist = Math.abs(currentDx + this.moveDistance);
+            const newYDist = Math.abs(currentDy);
+            if (newXDist <= currentXDist && newYDist <= currentYDist) {
+                validMoves.push({dir: 'left', score: newXDist + newYDist});
+            }
         }
+   
+        if (this.moves.right) {
+            const newXDist = Math.abs(currentDx - this.moveDistance);
+            const newYDist = Math.abs(currentDy);
+            if (newXDist <= currentXDist && newYDist <= currentYDist) {
+                validMoves.push({dir: 'right', score: newXDist + newYDist});
+            }
+        }
+    
+        if (this.moves.up) {
+            const newYDist = Math.abs(currentDy + this.moveDistance);
+            const newXDist = Math.abs(currentDx);
+            if (newXDist <= currentXDist && newYDist <= currentYDist) {
+                validMoves.push({dir: 'up', score: newXDist + newYDist});
+            }
+        }
+    
+        if (this.moves.down) {
+            const newYDist = Math.abs(currentDy - this.moveDistance);
+            const newXDist = Math.abs(currentDx);
+            if (newXDist <= currentXDist && newYDist <= currentYDist) {
+                validMoves.push({dir: 'down', score: newXDist + newYDist});
+            }
+        }
+    
+        let bestMove = null;
+        let minScore = Infinity;
+        
+        validMoves.forEach(move => {
+            if (move.score < minScore) {
+                minScore = move.score;
+                bestMove = move.dir;
+            }
+        });
+    
+        // Execute the best valid move
+        if (bestMove) {
+            switch(bestMove) {
+                case 'left':
+                    this.targetX -= this.moveDistance;
+                    this.facingLeft = true;
+                    break;
+                case 'right':
+                    this.targetX += this.moveDistance;
+                    this.facingLeft = false;
+                    break;
+                case 'up':
+                    this.targetY -= this.moveDistance;
+                    break;
+                case 'down':
+                    this.targetY += this.moveDistance;
+                    break;
+            }
+            this.game.isHunterMoving = true;
+            this.currentAnimator = this.animators.walking;
+        }
+        this.game.turnNumber--;
     }
 
     updatePosition() {
-        if (!this.game.isMoving) return;
+        if (!this.game.isHunterMoving) return;
 
         const deltaX = this.targetX - this.x;
         const deltaY = this.targetY - this.y;
@@ -98,7 +141,7 @@ class Player {
 
             this.x = this.targetX;
             this.y = this.targetY;
-            this.game.isMoving = false;
+            this.game.isHunterMoving = false;
             this.currentAnimator = this.animators.idle;
         } else {
  

@@ -1,4 +1,4 @@
-class Hunter {
+class Hunter2 {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
         this.width = 50;
@@ -20,7 +20,7 @@ class Hunter {
     }
 
     update() {
-        if (this.game.isPlayerTurn || this.game.hunterRemainingMoves <= 0) return;
+        if (this.game.isPlayerTurn == 0) return;
         if (this.isMoving) {
             this.updatePosition();
         } else {
@@ -40,7 +40,7 @@ class Hunter {
 
         if (moveDirection) {
             this.isMoving = true;
-            this.game.hunterRemainingMoves--;
+            this.game.isPlayerTurn--;
         }
     }
 

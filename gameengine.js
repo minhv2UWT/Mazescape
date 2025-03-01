@@ -24,8 +24,8 @@ class GameEngine {
         this.up = false;
         this.down = false;
         this.isMoving = false;
-        this.isPlayerTurn = true;
-        this.hunterRemainingMoves = 0;
+        this.isHunterMoving = false;
+        this.turnNumber = 0;
 
     };
 
@@ -72,7 +72,6 @@ class GameEngine {
 
         }, false);
         this.ctx.canvas.addEventListener('keyup',function(e){
-            that.isMoving = false;
             switch(e.code) {
                 case "ArrowLeft":
                     that.left = false;
@@ -160,9 +159,6 @@ class GameEngine {
             if (!entity.removeFromWorld) {
                 entity.update();
             }
-        }
-        if (!this.isPlayerTurn && this.hunterRemainingMoves === 0) {
-            this.isPlayerTurn = true;
         }
 
         for (let i = this.entities.length - 1; i >= 0; --i) {
