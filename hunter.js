@@ -13,7 +13,6 @@ class Hunter {
         this.game.isHunterMoving = false; 
         this.targetX = x;
         this.targetY = y;
-
         this.removeFromWorld = false;
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
         this.assets = {
