@@ -8,16 +8,16 @@ class Player {
         this.isDead = false;
         this.width = 100;
         this.height = 100;
-        this.speed = 1; 
+        this.speed = 5; 
         this.moveDistance = 100; 
         this.game.isMoving = false; 
         this.targetX = x;
         this.targetY = y;
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
         this.assets = {
-            WarriorIdle: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
-            WarriorAttack: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
-            Warrior: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
+            WarriorIdle: ASSET_MANAGER.getAsset("./sprites/prey.png"),
+            WarriorAttack: ASSET_MANAGER.getAsset("./sprites/prey.png"),
+            Warrior: ASSET_MANAGER.getAsset("./sprites/prey.png"),
         };
 
         this.moves = {

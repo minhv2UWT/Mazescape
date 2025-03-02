@@ -6,7 +6,7 @@ class EndZone {
         this.width = 100;
         this.height = 100;
         this.BB = new BoundingBox(x, y, this.width, this.height);
-        this.image = ASSET_MANAGER.getAsset("./sprites/warrior.png"); 
+        this.image = ASSET_MANAGER.getAsset("./sprites/hole.png"); 
         
     }
     draw(ctx) {

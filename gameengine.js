@@ -27,7 +27,7 @@ class GameEngine {
         this.isHunterMoving = false;
         this.turnNumber = 0;
         this.skip = false;
-
+        this.backgroundImage = null;
     };
 
     init(ctx) {
@@ -143,16 +143,17 @@ class GameEngine {
     };
 
     draw() {
-        
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
-        // Draw latest things first
+        if (this.backgroundImage) {
+            this.ctx.drawImage(this.backgroundImage, 0, 200, 600, 600);
+        }
+
         for (let i = this.entities.length - 1; i >= 0; i--) {
             this.entities[i].draw(this.ctx, this);
         }
         this.camera.draw(this.ctx);
-    };
-
+    }
     update() {
         let entitiesCount = this.entities.length;
 

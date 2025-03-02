@@ -15,9 +15,9 @@ class Hunter {
         this.targetY = y;
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
         this.assets = {
-            WarriorIdle: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
-            WarriorAttack: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
-            Warrior: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
+            WarriorIdle: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
+            WarriorAttack: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
+            Warrior: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
         };
 
         this.moves = {

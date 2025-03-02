@@ -2,7 +2,7 @@ class Wall {
     constructor(x, y, width, height, number) {
         this.boundingBox = new BoundingBox(x, y, width, height);
         Object.assign(this, { x, y, width, height });
-            this.image = ASSET_MANAGER.getAsset("./sprites/warrior.png"); 
+            this.image = ASSET_MANAGER.getAsset("./sprites/wall.png"); 
         
     }
     draw(ctx) {
