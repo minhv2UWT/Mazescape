@@ -26,6 +26,7 @@ class GameEngine {
         this.isMoving = false;
         this.isHunterMoving = false;
         this.turnNumber = 0;
+        this.skip = false;
 
     };
 
@@ -61,6 +62,7 @@ class GameEngine {
                     that.down = true;
                     break;
                 case "Space":
+                    that.skip = true;
                     break;
                 case "ShiftLeft":
                     break;
@@ -86,6 +88,7 @@ class GameEngine {
                     that.down = false;
                     break;
                 case "Space":
+                    that.skip = false;
                     break;
                 case "ShiftLeft":
                     break;

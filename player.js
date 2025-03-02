@@ -6,14 +6,14 @@ class Player {
         const characterTypes = ["Warrior"];
         this.characterType = characterTypes[characterNumber];
         this.isDead = false;
-        this.width = 50;
-        this.height = 50;
+        this.width = 100;
+        this.height = 100;
         this.speed = 1; 
-        this.moveDistance = 50; 
+        this.moveDistance = 100; 
         this.game.isMoving = false; 
         this.targetX = x;
         this.targetY = y;
-
+        this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
         this.assets = {
             WarriorIdle: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
             WarriorAttack: ASSET_MANAGER.getAsset("./sprites/warrior.png"),
@@ -30,8 +30,8 @@ class Player {
         this.sprite = this.assets;
         this.animators = {
             idle: new Animator(this.assets.WarriorIdle, 0, 0, this.width, this.height, 1, 0.3),
-            walking: new Animator(this.assets.Warrior, 0, 0, 50, this.height, 1, 0.1),
-            attacking: new Animator(this.assets.WarriorAttack, 0, 0, 45, this.height, 1, 0.1),
+            walking: new Animator(this.assets.Warrior, 0, 0, this.width, this.height, 1, 0.1),
+            attacking: new Animator(this.assets.WarriorAttack, 0, 0, this.width, this.height, 1, 0.1),
         };
 
         this.currentAnimator = this.animators.idle;
@@ -47,14 +47,22 @@ class Player {
     }
 
     update() {
-        if (this.isDead) return;
+        if (this.isDead) {
+            
+            return;
+        } 
         if((this.game.turnNumber > 0 && !this.game.isMoving) || this.game.isHunterMoving) return 0;
         this.handleMovementInput();
         this.updatePosition();
         this.handleCollisions();
         this.updateEdgePoints();
+        this.updateBoundingBox();
     }
 
+    updateBoundingBox() {
+        this.BB.x = this.x;
+        this.BB.y = this.y;
+    }
     handleMovementInput() {
         if (this.game.isMoving) return; 
 
@@ -83,6 +91,9 @@ class Player {
             this.attackDirection = "down";
             this.currentAnimator = this.animators.walking;
             this.game.isMoving = true;
+            this.game.turnNumber = 2;
+        }
+        else if (this.game.skip) {
             this.game.turnNumber = 2;
         }
     }
@@ -119,26 +130,25 @@ class Player {
                 if (this.leftPoint.x >= box.left && this.leftPoint.x <= box.right &&
                     this.leftPoint.y >= box.top && this.leftPoint.y <= box.bottom) {
                     canMoveLeft = false;
-                    console.log("Left hit");
                 }
 
                 if (this.rightPoint.x >= box.left && this.rightPoint.x <= box.right &&
                     this.rightPoint.y >= box.top && this.rightPoint.y <= box.bottom) {
                     canMoveRight = false;
-                    console.log("Right hit");
-                }
 
+                }
                 if (this.topPoint.x >= box.left && this.topPoint.x <= box.right &&
                     this.topPoint.y >= box.top && this.topPoint.y <= box.bottom) {
                     canMoveUp = false;
-                    console.log("Top hit");
                 }
 
                 if (this.bottomPoint.x >= box.left && this.bottomPoint.x <= box.right &&
                     this.bottomPoint.y >= box.top && this.bottomPoint.y <= box.bottom) {
                     canMoveDown = false;
-                    console.log("Bottom hit");
                 }
+            }
+            if ((entity instanceof EndZone) && this.BB.collide(entity.BB)) {
+                console.log("end touched");
             }
         }
 
