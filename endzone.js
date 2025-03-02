@@ -1,13 +1,12 @@
 class EndZone {
     constructor(x, y) {
-        console.log("endzone");
         
         Object.assign(this, {x, y});
         this.width = 100;
         this.height = 100;
         this.BB = new BoundingBox(x, y, this.width, this.height);
         this.image = ASSET_MANAGER.getAsset("./sprites/hole.png"); 
-        
+        this.removeFromWorld = false;
     }
     draw(ctx) {
 

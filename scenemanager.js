@@ -8,16 +8,16 @@ class entitiesmanager {
         this.startingPointY = 500;
         this.hunterStartingPointX = 0;
         this.hunterstartingPointY = 400;
-        this.player = new Player(this.game, this.startingPointX, this.startingPointY);
-        this.hunter = new Hunter(this.game, this.hunterStartingPointX, this.hunterstartingPointY);
+        this.game.currentStage = 1;
+        
 
 
-        this.loadLevel(level1Scene1);
+        this.loadLevel(level1);
     }
 
     loadLevel(level) {
         this.level = level;
-        this.game.entities = [];
+         this.game.entities = [];
         if (level.walls) {
             for (let i = 0; i < level.walls.length; i++) {
                 let wall = level.walls[i];
@@ -32,6 +32,9 @@ class entitiesmanager {
             
             }
         }
+
+        this.player = new Player(this.game, this.level.playerPos.x, this.level.playerPos.y);
+        this.hunter = new Hunter(this.game, this.level.hunterPos.x, this.level.hunterPos.y);
         this.game.addEntity(this.player);
         this.game.addEntity(this.hunter);
     }

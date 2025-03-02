@@ -8,11 +8,13 @@ class Hunter {
         this.isDead = false;
         this.width = 100;
         this.height = 100;
-        this.speed = 1; 
+        this.speed = 5; 
         this.moveDistance = 100; 
         this.game.isHunterMoving = false; 
         this.targetX = x;
         this.targetY = y;
+
+        this.removeFromWorld = false;
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
         this.assets = {
             WarriorIdle: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
@@ -30,8 +32,8 @@ class Hunter {
         this.sprite = this.assets;
         this.animators = {
             idle: new Animator(this.assets.WarriorIdle, 0, 0, this.width, this.height, 1, 0.3),
-            walking: new Animator(this.assets.Warrior, 0, 0, 50, this.height, 1, 0.1),
-            attacking: new Animator(this.assets.WarriorAttack, 0, 0, 45, this.height, 1, 0.1),
+            walking: new Animator(this.assets.Warrior, 0, 0, this.width, this.height, 1, 0.1),
+            attacking: new Animator(this.assets.WarriorAttack, 0, 0, this.width, this.height, 1, 0.1),
         };
 
         this.currentAnimator = this.animators.idle;
@@ -44,8 +46,8 @@ class Hunter {
         this.BB.y = this.y;
     }
     update() {
-        this.game.turnNumber = 0;
-        return;
+        // this.game.turnNumber = 0;
+        // return;
         if((this.game.turnNumber == 0 && !this.game.isHunterMoving) || this.game.isMoving) return;
         this.handleMovementInput();
         this.updatePosition();
@@ -56,12 +58,10 @@ class Hunter {
 
     handleMovementInput() {
         if (this.game.isHunterMoving) return;
-    
-        // Find the Player
+
         const player = this.game.entities.find(e => e instanceof Player);
         if (!player) return;
-    
-        // Current distances
+
         const currentDx = player.x - this.x;
         const currentDy = player.y - this.y;
         const currentXDist = Math.abs(currentDx);
@@ -216,11 +216,5 @@ class Hunter {
             ctx.restore();
         }
 
-        // Debugging
-        ctx.fillStyle = "red";
-        ctx.fillRect(this.leftPoint.x, this.leftPoint.y, 3, 3);
-        ctx.fillRect(this.rightPoint.x, this.rightPoint.y, 3, 3);
-        ctx.fillRect(this.topPoint.x, this.topPoint.y, 3, 3);
-        ctx.fillRect(this.bottomPoint.x, this.bottomPoint.y, 3, 3);
     }
 }

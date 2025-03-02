@@ -28,6 +28,7 @@ class GameEngine {
         this.turnNumber = 0;
         this.skip = false;
         this.backgroundImage = null;
+        this.currentStage = null;
     };
 
     init(ctx) {
@@ -156,20 +157,24 @@ class GameEngine {
     }
     update() {
         let entitiesCount = this.entities.length;
-
-        for (let i = 0; i < entitiesCount; i++) {
-            let entity = this.entities[i];
-
-            if (!entity.removeFromWorld) {
-                entity.update();
+        if(this.entities) {
+            for (let i = 0; i < entitiesCount; i++) {
+                let entity = this.entities[i];
+                
+    
+                if (entity && !entity.removeFromWorld) {
+                    entity.update();
+                }
+            }
+            for (let i = this.entities.length - 1; i >= 0; --i) {
+                if (this.entities[i].removeFromWorld) {
+                    this.entities.splice(i, 1);
+                }
             }
         }
+        
 
-        for (let i = this.entities.length - 1; i >= 0; --i) {
-            if (this.entities[i].removeFromWorld) {
-                this.entities.splice(i, 1);
-            }
-        }
+        
     };
 
     loop() {

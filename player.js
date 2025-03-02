@@ -11,6 +11,7 @@ class Player {
         this.speed = 5; 
         this.moveDistance = 100; 
         this.game.isMoving = false; 
+        this.removeFromWorld = false;
         this.targetX = x;
         this.targetY = y;
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
@@ -147,17 +148,34 @@ class Player {
                     canMoveDown = false;
                 }
             }
-            if ((entity instanceof EndZone) && this.BB.collide(entity.BB)) {
-                console.log("end touched");
+            if ((entity instanceof EndZone) && this.BB.collide(entity.BB) && !this.game.isMoving) {
+                this.game.currentStage++;
+                this.game.turnNumber = 0;
+                this.game.camera.loadLevel(this.checkLevel());
             }
         }
+        
 
         this.moves.left = canMoveLeft;
         this.moves.right = canMoveRight;
         this.moves.up = canMoveUp;
         this.moves.down = canMoveDown;
     }
+    checkLevel() {
+        switch (this.game.currentStage) {
+            case 1: return level1;
+            case 2: return level2;
+            case 3: return level3;
+            case 4: return level4;
+            // case 5: return level5;
+            // case 6: return level6;
+            default: 
+            console.log("You won!");
+            this.game.currentStage = 0;
+            return level0;
 
+        }
+    }
     updateEdgePoints() {
         this.leftPoint = { x: this.x, y: this.y + this.height / 2 }; 
         this.rightPoint = { x: this.x + this.width, y: this.y + this.height / 2 }; 
@@ -178,12 +196,5 @@ class Player {
         if (this.facingLeft) {
             ctx.restore();
         }
-
-        // Debugging
-        ctx.fillStyle = "red";
-        ctx.fillRect(this.leftPoint.x, this.leftPoint.y, 3, 3);
-        ctx.fillRect(this.rightPoint.x, this.rightPoint.y, 3, 3);
-        ctx.fillRect(this.topPoint.x, this.topPoint.y, 3, 3);
-        ctx.fillRect(this.bottomPoint.x, this.bottomPoint.y, 3, 3);
     }
 }

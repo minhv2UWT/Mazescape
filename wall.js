@@ -3,6 +3,7 @@ class Wall {
         this.boundingBox = new BoundingBox(x, y, width, height);
         Object.assign(this, { x, y, width, height });
             this.image = ASSET_MANAGER.getAsset("./sprites/wall.png"); 
+        this.removeFromWorld = false;
         
     }
     draw(ctx) {
