@@ -8,7 +8,7 @@ class Player {
         this.isDead = false;
         this.width = 100;
         this.height = 100;
-        this.speed = 5; 
+        this.speed = 2; 
         this.moveDistance = 100; 
         this.game.isMoving = false; 
         this.removeFromWorld = false;

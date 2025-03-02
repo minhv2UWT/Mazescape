@@ -8,7 +8,7 @@ class Hunter {
         this.isDead = false;
         this.width = 100;
         this.height = 100;
-        this.speed = 5; 
+        this.speed = 2; 
         this.moveDistance = 100; 
         this.game.isHunterMoving = false; 
         this.targetX = x;
@@ -111,7 +111,6 @@ class Hunter {
             }
         });
     
-        // Execute the best valid move
         if (bestMove) {
             switch(bestMove) {
                 case 'left':
