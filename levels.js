@@ -247,7 +247,9 @@ const level4 = {
         { x: 200, y: 495, width: 100, height: 10 },
         { x: 100, y: 495, width: 100, height: 10 },
         { x: 0, y: 395, width: 100, height: 10 },
-
+        { x: 200, y: 295, width: 100, height: 10 },
+        { x: 95, y: 300, width: 10, height: 100 },
+        { x: 100, y: 295, width: 100, height: 10 },
         { x: 395, y: 600, width: 10, height: 100 }, 
         { x: 295, y: 600, width: 10, height: 100 }, 
         { x: 295, y: 400, width: 10, height: 100 }, 
@@ -256,6 +258,6 @@ const level4 = {
     ],
     endZones: [{ x: 0, y: 200}],
     playerPos: { x: 200, y: 300},
-    hunterPos :  { x: 500, y: 300} 
+    hunterPos :  { x: 200, y: 500} 
 
 };

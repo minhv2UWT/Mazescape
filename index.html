@@ -73,15 +73,19 @@
             // Load the appropriate level based on the stage number
             switch (stageNumber) {
                 case 1:
+                    gameEngine.currentStage = 1;
                     entitiesManager.loadLevel(level1);
                     break;
                 case 2:
+                    gameEngine.currentStage = 2;
                     entitiesManager.loadLevel(level2);
                     break;
                 case 3:
+                    gameEngine.currentStage = 3;
                     entitiesManager.loadLevel(level3);
                     break;
                 case 4:
+                    gameEngine.currentStage = 4;
                     entitiesManager.loadLevel(level4);
                     break;
                 default:
