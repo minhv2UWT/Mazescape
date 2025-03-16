@@ -1,9 +1,27 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Game Project Title Goes Here</title>
+    <title>Game Project</title>
+    <style>
+        #stageSelect, #loseScreen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+        .stageButton, #retryButton, #menuButton {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
   
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./timer.js"></script>
@@ -21,6 +39,58 @@
 
 </head>
 <body>
-    <canvas id="gameWorld" width="1000" height="800" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
+    <canvas id="gameWorld" width="1000" height="800" style="background: white; border: 1px solid black; display: none;" tabindex="0" autofocus></canvas>
+    <div id="stageSelect">
+        <h1>Select Stage</h1>
+        <button class="stageButton" onclick="loadStage(1)">Stage 1</button>
+        <button class="stageButton" onclick="loadStage(2)">Stage 2</button>
+        <button class="stageButton" onclick="loadStage(3)">Stage 3</button>
+        <button class="stageButton" onclick="loadStage(4)">Stage 4</button>
+    </div>
+    <div id="loseScreen" style="display: none;">
+        <h1>You Lost!</h1>
+        <button id="retryButton">Retry</button>
+        <button id="menuButton">Menu</button>
+    </div>
+
+    <script>
+        function loadStage(stageNumber) {
+            // Hide the stage selection screen
+            document.getElementById("stageSelect").style.display = "none";
+
+            // Show the game canvas
+            document.getElementById("gameWorld").style.display = "block";
+
+            // Load the selected level
+            const gameEngine = new GameEngine();
+            const canvas = document.getElementById("gameWorld");
+            const ctx = canvas.getContext("2d");
+
+            gameEngine.init(ctx);
+            const entitiesManager = new entitiesmanager(gameEngine, "warrior");
+            gameEngine.backgroundImage = ASSET_MANAGER.getAsset("./sprites/ground.png");
+
+            // Load the appropriate level based on the stage number
+            switch (stageNumber) {
+                case 1:
+                    entitiesManager.loadLevel(level1);
+                    break;
+                case 2:
+                    entitiesManager.loadLevel(level2);
+                    break;
+                case 3:
+                    entitiesManager.loadLevel(level3);
+                    break;
+                case 4:
+                    entitiesManager.loadLevel(level4);
+                    break;
+                default:
+                    console.error("Invalid stage number");
+                    return;
+            }
+
+            gameEngine.start();
+        }
+    </script>
 </body>
 </html>
