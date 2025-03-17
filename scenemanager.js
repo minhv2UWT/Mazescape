@@ -1,5 +1,5 @@
 class entitiesmanager {
-    constructor(game, character) {
+    constructor(game) {
 
         this.game = game;
         this.level = null; 

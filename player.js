@@ -154,6 +154,9 @@ class Player {
                 this.game.turnNumber = 0;
                 this.game.camera.loadLevel(this.checkLevel());
             }
+            if ((entity instanceof Hunter) && this.BB.collide(entity.BB) && !this.game.isMoving) {
+                this.die();
+            }
         }
         
 
