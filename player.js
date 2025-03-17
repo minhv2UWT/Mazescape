@@ -3,7 +3,7 @@ class Player {
         Object.assign(this, { game, x, y });
         this.startingPointX = x;
         this.startingPointY = y;
-        const characterTypes = ["Warrior"];
+        const characterTypes = ["Prey"];
         this.characterType = characterTypes[characterNumber];
         this.isDead = false;
         this.width = 100;
@@ -16,9 +16,9 @@ class Player {
         this.targetY = y;
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
         this.assets = {
-            WarriorIdle: ASSET_MANAGER.getAsset("./sprites/prey.png"),
-            WarriorAttack: ASSET_MANAGER.getAsset("./sprites/prey.png"),
-            Warrior: ASSET_MANAGER.getAsset("./sprites/prey.png"),
+            PreyIdle: ASSET_MANAGER.getAsset("./sprites/prey.png"),
+            PreyAttack: ASSET_MANAGER.getAsset("./sprites/prey.png"),
+            Prey: ASSET_MANAGER.getAsset("./sprites/prey.png"),
         };
 
         this.moves = {
@@ -30,9 +30,9 @@ class Player {
 
         this.sprite = this.assets;
         this.animators = {
-            idle: new Animator(this.assets.WarriorIdle, 0, 0, this.width, this.height, 1, 0.3),
-            walking: new Animator(this.assets.Warrior, 0, 0, this.width, this.height, 1, 0.1),
-            attacking: new Animator(this.assets.WarriorAttack, 0, 0, this.width, this.height, 1, 0.1),
+            idle: new Animator(this.assets.PreyIdle, 0, 0, this.width, this.height, 1, 0.3),
+            walking: new Animator(this.assets.Prey, 0, 0, this.width, this.height, 1, 0.1),
+            attacking: new Animator(this.assets.PreyAttack, 0, 0, this.width, this.height, 1, 0.1),
         };
 
         this.currentAnimator = this.animators.idle;
@@ -43,8 +43,9 @@ class Player {
     die() {
         console.log("Player has been defeated!");
         this.isDead = true;
-        this.totalKills = 0;
         this.removeFromWorld = true;
+        this.game.currentStage = -1;
+        this.game.camera.loadLevel(this.checkLevel());
     }
 
     update() {
@@ -163,12 +164,15 @@ class Player {
     }
     checkLevel() {
         switch (this.game.currentStage) {
+            case -1:
+                console.log("You lost!");
+                return levelLose;
             case 1: return level1;
             case 2: return level2;
             case 3: return level3;
             case 4: return level4;
-            // case 5: return level5;
-            // case 6: return level6;
+            case 5: return level5;
+            case 6: return level6;
             default: 
             console.log("You won!");
             this.game.currentStage = 0;

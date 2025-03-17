@@ -3,7 +3,7 @@ class Hunter {
         Object.assign(this, { game, x, y });
         this.startingPointX = x;
         this.startingPointY = y;
-        const characterTypes = ["Warrior"];
+        const characterTypes = ["Hunter"];
         this.characterType = characterTypes[characterNumber];
         this.isDead = false;
         this.width = 100;
@@ -16,9 +16,9 @@ class Hunter {
         this.removeFromWorld = false;
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
         this.assets = {
-            WarriorIdle: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
-            WarriorAttack: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
-            Warrior: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
+            HunterIdle: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
+            HunterAttack: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
+            Hunter: ASSET_MANAGER.getAsset("./sprites/hunterghost.png"),
         };
 
         this.moves = {
@@ -30,9 +30,9 @@ class Hunter {
 
         this.sprite = this.assets;
         this.animators = {
-            idle: new Animator(this.assets.WarriorIdle, 0, 0, this.width, this.height, 1, 0.3),
-            walking: new Animator(this.assets.Warrior, 0, 0, this.width, this.height, 1, 0.1),
-            attacking: new Animator(this.assets.WarriorAttack, 0, 0, this.width, this.height, 1, 0.1),
+            idle: new Animator(this.assets.HunterIdle, 0, 0, this.width, this.height, 1, 0.3),
+            walking: new Animator(this.assets.Hunter, 0, 0, this.width, this.height, 1, 0.1),
+            attacking: new Animator(this.assets.HunterAttack, 0, 0, this.width, this.height, 1, 0.1),
         };
 
         this.currentAnimator = this.animators.idle;
@@ -182,9 +182,7 @@ class Hunter {
                     canMoveDown = false;
                 }
             }
-            if((entity instanceof Player) && this.BB.collide(entity.BB)) {
-                entity.die();
-            }
+
         }
 
         this.moves.left = canMoveLeft;

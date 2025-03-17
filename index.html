@@ -21,6 +21,26 @@
             font-size: 16px;
             cursor: pointer;
         }
+
+        #gameContainer {
+            display: flex;
+            align-items: flex-start;
+        }
+        #gameWorld {
+            background: white;
+            border: 1px solid black;
+            display: none;
+        }
+        #rightPanel {
+            margin-left: 20px; 
+        }
+        #rightPanel button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
   
     <script type="text/javascript" src="./assetmanager.js"></script>
@@ -39,39 +59,51 @@
 
 </head>
 <body>
-    <canvas id="gameWorld" width="1000" height="800" style="background: white; border: 1px solid black; display: none;" tabindex="0" autofocus></canvas>
+    <div id="gameContainer">
+        <canvas id="gameWorld" width="600" height="800" tabindex="0" autofocus></canvas>
+        <div id="rightPanel">
+            <button onclick="loadStage(1)">Stage 1</button>
+            <button onclick="loadStage(2)">Stage 2</button>
+            <button onclick="loadStage(3)">Stage 3</button>
+            <button onclick="loadStage(4)">Stage 4</button>
+            <button onclick="loadStage(5)">Stage 5</button>
+        </div>
+    </div>
+
     <div id="stageSelect">
         <h1>Select Stage</h1>
-        <button class="stageButton" onclick="loadStage(1)">Stage 1</button>
+        <button class="stageButton" onclick="loadStage(0)">Instant Win, Don't click!</button>
+        <button class="stageButton" onclick="loadStage(1)">Start the Game</button>
         <button class="stageButton" onclick="loadStage(2)">Stage 2</button>
         <button class="stageButton" onclick="loadStage(3)">Stage 3</button>
         <button class="stageButton" onclick="loadStage(4)">Stage 4</button>
-    </div>
-    <div id="loseScreen" style="display: none;">
-        <h1>You Lost!</h1>
-        <button id="retryButton">Retry</button>
-        <button id="menuButton">Menu</button>
+        <button class="stageButton" onclick="loadStage(5)">Stage 5</button>
     </div>
 
     <script>
         function loadStage(stageNumber) {
-            // Hide the stage selection screen
+
             document.getElementById("stageSelect").style.display = "none";
 
-            // Show the game canvas
             document.getElementById("gameWorld").style.display = "block";
 
-            // Load the selected level
             const gameEngine = new GameEngine();
             const canvas = document.getElementById("gameWorld");
             const ctx = canvas.getContext("2d");
 
             gameEngine.init(ctx);
-            const entitiesManager = new entitiesmanager(gameEngine, "warrior");
+            const entitiesManager = new entitiesmanager(gameEngine);
             gameEngine.backgroundImage = ASSET_MANAGER.getAsset("./sprites/ground.png");
 
-            // Load the appropriate level based on the stage number
             switch (stageNumber) {
+                case -1:
+                    gameEngine.currentStage = -1;
+                    entitiesManager.loadLevel(levellose);
+                    break;
+                case 0:
+                    gameEngine.currentStage = 0;
+                    entitiesManager.loadLevel(level0);
+                    break;
                 case 1:
                     gameEngine.currentStage = 1;
                     entitiesManager.loadLevel(level1);
@@ -87,6 +119,10 @@
                 case 4:
                     gameEngine.currentStage = 4;
                     entitiesManager.loadLevel(level4);
+                    break;
+                case 5:
+                    gameEngine.currentStage = 5;
+                    entitiesManager.loadLevel(level5);
                     break;
                 default:
                     console.error("Invalid stage number");
